@@ -1,0 +1,35 @@
+/* Reseteo básico y tipografía general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Estilos exclusivos del menú de navegación */
+nav {
+    background-color: #1a1a1a;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #4a4a4a;
+}
+
+/* Clase activa que agregará JavaScript */
+nav a.activo {
+    background-color: #007bff;
+}

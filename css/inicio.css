@@ -1,0 +1,20 @@
+/* Estilos solo para la página de inicio */
+#contenido-inicio {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+#boton-inicio {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
