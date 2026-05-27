@@ -1,31 +1,620 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Mi Proyecto</title>
+    <meta name="viewport" content="width=device-width-90%, initial-scale=1.0">
+    <title>Eureka | CONCYTEC</title>
     
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/inicio.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#B4BD0E',   // Verde
+                        dark: '#005A7C',    // Azul
+                        accent: '#00B3CD',  // Celeste
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 font-sans">
 
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="pagina1.html">Página 1</a>
-        <a href="pagina2.html">Página 2</a>
-        <a href="pagina3.html">Página 3</a>
-        <a href="pagina4.html">Página 4</a>
-        <a href="pagina5.html">Página 5</a>
-    </nav>
+    <!-- <div class="bg-brand text-white py-3 px-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-center items-center gap-4">
+            <div class="flex items-center gap-2 font-bold uppercase tracking-wider">
+                <span class="animate-pulse">🔔</span> 
+                Cierre de postulación:
+            </div>
+            
+            <div id="countdown" class="flex gap-4 font-mono text-xl font-black">
+                <div class="flex flex-col items-center leading-none">
+                    <span id="days">00</span><span class="text-[10px] uppercase font-sans">Días</span>
+                </div>
+                <span>:</span>
+                <div class="flex flex-col items-center leading-none">
+                    <span id="hours">00</span><span class="text-[10px] uppercase font-sans">Hrs</span>
+                </div>
+                <span>:</span>
+                <div class="flex flex-col items-center leading-none">
+                    <span id="minutes">00</span><span class="text-[10px] uppercase font-sans">Min</span>
+                </div>
+                <span>:</span>
+                <div class="flex flex-col items-center leading-none">
+                    <span id="seconds">00</span><span class="text-[10px] uppercase font-sans">Seg</span>
+                </div>
+            </div>
+            
+        </div>
+    </div> -->
 
-    <main id="contenido-inicio">
-        <h1>Bienvenido al Inicio</h1>
-        <p>Este contenido está controlado solo por inicio.css e inicio.js</p>
-        <button id="boton-inicio">Haz clic aquí</button>
-    </main>
+    <!-- <script>
+        const targetDate = new Date("April 19, 2026 23:59:59").getTime();
 
-    <script src="js/global.js"></script>
-    <script src="js/inicio.js"></script>
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d < 10 ? "0"+d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0"+h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0"+m : m;
+            document.getElementById("seconds").innerText = s < 10 ? "0"+s : s;
+        }, 1000);
+    </script> -->
+
+
+
+    <header id="inicio" class="relative h-[80vh] flex items-center justify-center text-center text-white bg-slate-900">
+
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            class="absolute inset-0 w-full h-full object-cover opacity-40">
+            <source src="assets/video/eureka.mp4" type="video/mp4">
+            Tu navegador no soporta videos.
+        </video>
+
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/50"></div>
+
+        <div class="relative z-10 px-4 animate__animated animate__fadeInUp">
+            <h1 class="text-4xl md:text-7xl font-bold mb-4 pt-24 md:pt-40 animate__animated animate__fadeInUp">EUREKA <span class="text-brand">2026</span></h1>
+            <p class="text-xl md:text-3xl mb-6 max-w-2xl mx-auto">XXXVI Feria Escolar Nacional de Ciencia y Tecnología</p>
+            <p class="text-xl md:text-2xl mb-6 max-w-2xl mx-auto font-bold text-brand">Del 5 al 7 de noviembre</p>
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <a href="https://www.gob.pe/institucion/minedu/campa%C3%B1as/64666-feria-escolar-nacional-de-ciencia-y-tecnologia-eureka-2026" target="_blank" class="bg-brand border-2 border-white text-lg px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-slate-700 transition">Bases 2026</a>
+                <a href="https://www.youtube.com/watch?v=2qxd9jsujl4" target="_blank" class="border-2 border-white bg-accent text-lg px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-slate-700 transition">Eureka 2025</a>
+                <a href="#videos" class="border-2 border-white bg-dark text-lg px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-slate-700 transition">Galería de videos</a>
+            </div>
+
+            <!-- <div class="text-2xl flex flex-wrap justify-center gap-4 mb-8">
+                <a href="#finalistasjr" class="bg-brand hover:opacity-70 text-white font-bold px-8 py-3 rounded-full  transition">&nbsp; Finalistas JUNIOR &nbsp;</a>
+                <a href="#finalistassr" class="bg-brand hover:opacity-70 text-white font-bold px-8 py-3 rounded-full  transition">&nbsp; Finalistas SENIOR &nbsp;</a>
+            </div> -->
+
+        </div>
+        
+    </header>
+
+    <section id="bases" class="py-10 container mx-auto max-w-6xl px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">¿Cómo participar?</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-xl hover:scale-105 transition transform border-t-4 border-accent">
+                <div class="text-red-600 mb-4 text-3xl">📄</div>
+                <h3 class="text-xl font-bold mb-2 text-slate-700">Bases del Concurso</h3>
+                <p class="text-slate-600 mb-4">Descarga los lineamientos técnicos y requisitos para participar en esta edición 2026.</p>
+                <a href="https://www.gob.pe/institucion/minedu/campa%C3%B1as/64666-feria-escolar-nacional-de-ciencia-y-tecnologia-eureka-2026" target=_blank class="text-brand font-bold hover:underline">Descargar PDF →</a>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-xl hover:scale-105 transition transform border-t-4 border-accent">
+                <div class="text-red-600 mb-4 text-3xl">👩‍🏫</div>
+                <h3 class="text-xl text-slate-700 font-bold mb-2">Asistencia Técnica</h3>
+                <p class="text-slate-600 mb-4">Mira la asistencia técnica para participar de esta edición 2026.</p>
+                <a href="https://www.youtube.com/watch?v=752QMSj6KCA" target=_blank class="text-brand font-bold hover:underline">Ir a la reunión →</a>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-xl hover:scale-105 transition transform border-t-4 border-accent">
+                <div class="text-red-600 mb-4 text-3xl">👩‍💻</div>
+                <h3 class="text-xl font-bold mb-2 text-slate-700">Cartillas Eureka</h3>
+                <p class="text-slate-600 mb-4">Ideas para participar en la Feria Escolar Nacional de Ciencia y Tecnología “Eureka”.</p>
+                <a href="https://cdn.www.gob.pe/uploads/document/file/7721026/64666-como-participar-indagacion-social%282%29.pdf" target=_blank class="text-brand text-sm font-bold hover:underline">Categorías A, B y C →</a><br>
+                <a href="https://cdn.www.gob.pe/uploads/document/file/7721025/64666-como-participar-ciencia-y-tecnologia%282%29.pdf" target=_blank class="text-brand text-sm font-bold hover:underline">Categorías D y E →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="categorias" class="py-10 container mx-auto max-w-2xl px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">Categorías</h2>
+        <div class="grid grid-cols-1 gap-8 max-w-6xl">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-accent hover:scale-105 transition transform">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider w-1/4 text-center">Categoría</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Grados</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">A</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Primero y segundo grado de Educación Primaria</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">B</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Tercero y cuarto grado de Educación Primaria</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">C</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Quinto y sexto grado de Educación Primaria</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">D</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Primero y segundo de Educación Secundaria</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">E</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Tercero, cuarto y quinto de Educación Secundaria</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="categorias" class="py-10 container mx-auto max-w-4xl px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">Áreas de Participación</h2>
+        <div class="grid grid-cols-1 gap-8 max-w-6xl"> 
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-accent hover:scale-105 transition transform">
+                <table class="w-full text-left border-collapse"> 
+                    <thead> 
+                        <tr>
+                            <th colspan="5" class="bg-accent px-6 text-slate-100 font-bold text-xl uppercase text-center">CATEGORÍAS A, B y C</th>
+                        </tr>
+                    </thead>
+                    <thead> 
+                        <tr class="bg-slate-50 border-b border-slate-200 center">
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Área Curricular</th>
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Competencias</th>
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Áreas de participación</th>
+                            <th class="hidden md:table-cell py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Estudiantes expositores</th>
+                            <th class="hidden md:table-cell py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Docente asesor</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 hover:bg-slate-50/80 transition-colors duration-200 border-b border-slate-200">
+                        <tr>
+                            <td rowspan="2" class="py-4 px-4 font-bold text-lg text-dark text-center">Ciencia y tecnología</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Indagación científica (descriptiva y experimental)</td>
+                            <td rowspan="2" class="py-4 px-6 text-slate-600 font-medium">Indagación en ciencia y tecnología</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Alternativa de solución tecnológica</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="divide-y divide-slate-100 hover:bg-slate-50/80 transition-colors duration-200">
+                        <tr>
+                            <td rowspan="2" class="py-4 px-4 font-bold text-lg text-dark text-center">Personal social</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Construye interpretaciones históricas</td>
+                            <td rowspan="2" class="py-4 px-6 text-slate-600 font-medium">Indagación social</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Gestiona responsablemente el espacio y el ambiente</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 max-w-6xl py-10"> 
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-accent hover:scale-105 transition transform">
+                <table class="w-full text-left border-collapse"> 
+                    <thead> 
+                        <tr>
+                            <th colspan="5" class="bg-accent text-slate-100 font-bold text-xl uppercase text-center">CATEGORÍAS D y E</th>
+                        </tr>
+                    </thead>
+                    <thead> 
+                        <tr class="bg-slate-50 border-b border-slate-200 center">
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider ">Área Curricular</th>
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Competencias</th>
+                            <th class="py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Áreas de participación</th>
+                            <th class="hidden md:table-cell py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Estudiantes expositores</th>
+                            <th class="hidden md:table-cell py-4 px-2 text-slate-100 font-bold uppercase text-sm tracking-wider">Docente asesor</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 hover:bg-slate-50/80 transition-colors duration-200 border-b border-slate-200">
+                        <tr>
+                            <td rowspan="2" class="py-2 px-4 font-bold text-lg text-dark text-center">Ciencia y tecnología</td>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Indaga mediante métodos científicos para construir conocimientos</td>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Indagación científica (descriptiva y experimental)</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1 o 2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Diseña y construye soluciones tecnológicas para resolver problemas de su entorno</td>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Soluciones tecnológicas</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1 o 2</td>
+                            <td class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="divide-y divide-slate-100 hover:bg-slate-50/80 transition-colors duration-200 mb-">
+                        <tr>
+                            <td rowspan="3" class="py-2 px-4 font-bold text-lg text-dark text-center">Ciencias Sociales</td>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Construye interpretaciones históricas</td>
+                            <td rowspan="3" class="py-4 px-6 text-slate-600 font-medium">Ciencias Sociales</td>
+                            <td rowspan="3" class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1 o 2</td>
+                            <td rowspan="3" class="hidden md:table-cell py-4 px-6 text-slate-600 font-medium">1</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Gestiona responsablemente los recursos económicos</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-2 text-slate-600 font-medium">Gestiona responsablemente el espacio y el ambiente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="categorias" class="py-10 container mx-auto max-w-2xl px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">Etapas</h2>
+        <div class="grid grid-cols-1 gap-8 max-w-6xl">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-accent hover:scale-105 transition transform">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th rowspan="2" class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Categoría</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">IE</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">UGEL</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">DRE</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Nacional</th>
+                        </tr>
+                        <!-- <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="py-2 px-2 text-slate-100 font-light text-sm tracking-wider">Hasta el 29 de agosto</th>
+                            <th class="py-2 px-2 text-slate-100 font-light text-sm tracking-wider">Del 15 al 19 de septiembre</th>
+                            <th class="py-2 px-2 text-slate-100 font-light text-sm tracking-wider">Del 6 al 10 de octubre</th>
+                            <th class="py-2 px-2 text-slate-100 font-light text-sm tracking-wider">Del 5 al 7 de noviembre</th>
+                        </tr> -->
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">A</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">B</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">C</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">D</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="py-4 px-6 font-bold text-lg text-dark text-center">E</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                            <td class="py-4 px-6 text-slate-600 font-medium"><span class="check-verde">✅&#xFE0E;</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="categorias" class="py-10 container mx-auto max-w-2xl px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">Cronograma</h2>
+        <div class="grid grid-cols-1 gap-8 max-w-6xl">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-accent hover:scale-105 transition transform">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th rowspan="2" class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Etapa</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Hito</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider">Fechas</th>
+                        </tr>
+                    </thead>
+                    <tbody class="hover:bg-slate-50/70 transition-colors">
+                        <tr>
+                            <td rowspan="2" class="py-4 px-6 font-bold text-dark text-center">IE</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Desarrollo del concurso</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Desde el inicio del año escolar hasta el 29 de agosto</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Inscripción en el SICE para la etapa UGEL</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 1 al 12 de setiembre</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="hover:bg-slate-50/70 transition-colors">
+                        <tr>
+                            <td rowspan="2" class="py-4 px-6 font-bold text-dark text-center">UGEL</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Desarrollo del concurso</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 15 al 19 de setiembre</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Inscripción en el SICE para la etapa DRE/GRE</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 22 de setiembre hasta el 3 de octubre</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="hover:bg-slate-50/70 transition-colors">
+                        <tr>
+                            <td rowspan="2" class="py-4 px-6 font-bold text-dark text-center">DRE / GRE</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Desarrollo del concurso</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 6 al 10 de octubre</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Inscripción en el SICE para la etapa nacional</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 13 al 17 de octubre</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="hover:bg-slate-50/70 transition-colors">
+                        <tr>
+                            <td class="py-4 px-6 font-bold text-dark text-center">Nacional</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Desarrollo del concurso</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">Del 5 al 7 de noviembre</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="bg-dark px-6 font-bold text-lg text-slate-100 text-center">Publicación resultados finales</td>
+                            <td class="bg-accent px-6 text-slate-100 font-bold">12 de noviembre</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <section id="videos" class="py-10 container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark">Galería de Videos</h2>
+        
+        <div id="contenedor-videos" class="grid md:grid-cols-2 max-w-6xl gap-12 mx-auto">
+            <p class="text-center col-span-full">Cargando videos...</p>
+        </div>
+    </section>
+    
+
+    <script>
+        const SHEET_ID = '14Ry9Svg6nJ5UFqArWMksNycSOW_keNKj43n1bj2N_dI';
+        const SHEET_NAME = 'Hoja 1'; 
+        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+        fetch(URL)
+            .then(res => res.text())
+            .then(data => {
+                const json = JSON.parse(data.substr(47).slice(0, -2));
+                const rows = json.table.rows;
+                const contenedor = document.getElementById('contenedor-videos');
+                contenedor.innerHTML = ''; 
+
+                // .slice(1) le dice a JavaScript: "Corta el primer elemento y quédate con el resto"
+                rows.slice(1).forEach(row => {
+                    const idVideo = row.c[0].v;
+                    const titulo = row.c[1] ? row.c[1].v : "Sin título";
+                    const descripcion = row.c[2] ? row.c[2].v : "";
+
+                    // Función para manejar el error de imagen y cargar una de menor resolución si la HD no existe
+                    const thumbHD = `https://img.youtube.com/vi/${idVideo}/maxresdefault.jpg`;
+                    const thumbSD = `https://img.youtube.com/vi/${idVideo}/hqdefault.jpg`;
+
+                    const card = `
+                        <div class="bg-white rounded-2xl shadow-xl hover:scale-105 transition transform border-t-4 border-accent overflow-hidden flex flex-col">
+                            <div class="aspect-video relative group cursor-pointer bg-black overflow-hidden" 
+                                id="container-${idVideo}"
+                                onclick="loadVideo('${idVideo}')">
+                                
+                                <img src="${thumbSD}" 
+                                    onerror="this.src='${thumbHD}'" 
+                                    alt="${titulo}" 
+                                    class="w-full h-full object-cover object-center transform scale-[1.02] transition">
+                                
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/40 transition">
+                                    <div class="bg-red-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition transform">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 ml-0.5">
+                                            <path fill-rule="evenodd" d="M4.5 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 text-dark">${titulo}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">${descripcion}</p>
+                            </div>
+                        </div>
+                    `;
+                        contenedor.innerHTML += card;
+                })
+            })
+            
+            .catch(err => {
+                console.error(err);
+                document.getElementById('contenedor-videos').innerHTML = '<p class="text-red-500 text-center col-span-full">Error al cargar los videos.</p>';
+            });
+
+        function loadVideo(id) {
+            const container = document.getElementById(`container-${id}`);
+            container.innerHTML = `
+                <iframe 
+                    class="w-full h-full" 
+                    src="https://www.youtube.com/embed/${id}?autoplay=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>`;
+        }
+
+
+    </script>
+
+
+
+    <section class="py-16 bg-slate-50">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-dark mb-4">Instituciones Involucradas</h2>
+        <div class="h-1 w-20 bg-accent mx-auto mb-10"></div>
+        
+        <div class="flex flex-wrap justify-center items-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all">
+            <img href="https://www.gob.pe/concytec" src="assets/logos/logo-concytec.png" alt="Concytec" class="h-20" >
+            <img href="https://www.fecyt.es/" src="assets/logos/minedu.png" alt="FECYT" class="h-10" >
+        </div>
+        
+        <div class="mt-12 p-8 bg-white rounded-2xl border-dashed border-2 border-accent/30 max-w-3xl mx-auto">
+            <p class="text-dark italic text-lg">
+                "Buscamos promover el desarrollo de una cultura científica, innovación y un espíritu creativo en los estudiantes de educación básica del Perú."
+            </p>
+        </div>
+    </div>
+    </section>
+
+    <footer class="bg-dark text-white pt-10 pb-8">
+        <!-- <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12 border-b border-white/10 pb-12"> -->
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12 pb-4">
+            <div>
+                <h3 class="text-brand font-bold text-xl mb-4">Eureka</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Feria Escolar Nacional de Ciencia y Tecnología que busca promover el desarrollo de competencias científicas y tecnológicas en las y los estudiantes de las instituciones educativas públicas y privadas del Perú.
+                </p>
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 uppercase text-accent tracking-widest text-sm">Contacto</h4>
+                <p class="text-slate-400 text-sm">📍 Av. del Aire 485, San Borja, Lima</p>
+                <p class="text-slate-400 text-sm">☎️ 0051-1-399-0030 anexo 1220</p>
+                <p class="text-slate-400 text-sm">📧 popularizacion@concytec.gob.pe</p>
+                <div class="flex gap-4 mt-4">
+                    <a href="https://www.facebook.com/concytec/" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-brand cursor-pointer">FB</a>
+                    <a href="https://www.instagram.com/concytecperu/" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-brand cursor-pointer">IG</a>
+                    <a href="https://www.youtube.com/ConcytecPeru" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-brand cursor-pointer">YT</a>
+                    <a href="https://www.tiktok.com/@concytecperu" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-brand cursor-pointer">TT</a>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="text-center mt-8 text-xs text-slate-500 uppercase tracking-widest">
+            © 2026 CONCYTEC | Unidad de popularización de la ciencia, tecnología e innovación
+        </div> -->
+    </footer>
+
+<script>
+
+async function cargarFinalistas(gid, elementId) {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}`;
+    
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        const container = document.getElementById(elementId);
+
+        // Nombres de los campos para las etiquetas en celular
+        const labels = ["Apellidos", "Nombres", "Lugar de residencia", "Situación", "Modalidad"];
+
+        rows.forEach((row, index) => {
+            if (index === 0) return; // Omitir cabecera del Excel
+            if (!row.c || !row.c[0]) return; // Omitir filas vacías
+
+            // Iteramos las 5 celdas de la fila del participante
+            row.c.forEach((cell, cellIndex) => {
+                const valor = cell ? cell.v : "";
+                
+                const p = document.createElement('p');
+                // Clases base y diseño adaptativo:
+                // En móviles añadimos un pseudo-título usando un prefijo simulado o clases.
+                p.className = "text-slate-600 text-sm md:text-base border-b border-slate-100 md:border-none pb-2 md:pb-0 flex flex-col md:block";
+                
+                // Formato responsive inteligente:
+                // En celulares genera: "APELLIDOS: Perez" / En PC solo genera: "Perez"
+                p.innerHTML = `
+                    <span class="text-[10px] uppercase font-bold text-slate-400 md:hidden">${labels[cellIndex]}</span>
+                    <span class="text-slate-800 md:text-slate-600">${valor}</span>
+                `;
+                
+                container.appendChild(p);
+            });
+
+            // Añadimos un separador visual transparente que solo se ve en móviles para distanciar un participante de otro
+            const divider = document.createElement('div');
+            divider.className = "col-span-1 border-b-2 border-dashed border-slate-200 my-2 md:hidden";
+            container.appendChild(divider);
+        });
+        
+    } catch (error) {
+        console.error("Error cargando datos de la hoja " + gid, error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarFinalistas('0', 'grid-junior');      
+    cargarFinalistas('1071357888', 'grid-senior'); 
+});
+
+</script>
+
 </body>
+
 </html>
+
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    /* Quitamos los bordes verticales internos y dejamos solo una línea sutil abajo */
+    border-bottom: 1px solid #e2e8f0; 
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #005A7C; /* Encabezado oscuro para mejor contraste */
+    color: white;
+    font-weight: bold;
+}
+
+/* Colores alternados por bloques (manualmente mediante clases) */
+.bloque-gris {
+    background-color: #f8fafc; /* Gris muy claro */
+}
+
+.bloque-blanco {
+    background-color: #ffffff;
+}
+
+.left-align {
+    text-align: left;
+}
+
+.check-verde {
+            /* Al ser plano, ahora puedes ponerle el color exacto que quieras */
+            color: #B4BD0E; /* Azul Tailwind */
+            font-size: 24px;
+            font-weight: bold;
+}
+
+</style>
