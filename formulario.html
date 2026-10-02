@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feria Eureka - Categoría D</title>
+    <title>Feria Eureka</title>
     <link rel="stylesheet" href="css/formulario.css">
     <style>
         .step { display: none; }
@@ -26,7 +26,7 @@
         /* Layout horizontal para optimizar espacio en Etapa 2 */
         .field-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
         .field-row label { margin-top: 0; min-width: 145px; white-space: nowrap; }
-        .field-row input { flex: 1; min-width: 150px; margin-top: 0; padding: 6px 10px; }
+        .field-row input, .field-row textarea { flex: 1; min-width: 150px; margin-top: 0; padding: 6px 10px; }
         
         /* Layout de 3 columnas en Etapa 3 */
         .flex-row-3 { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
@@ -47,7 +47,7 @@
     <div class="header-banner" style="text-align: center; margin-bottom: 15px;">
         <h2 style="font-size: 1.2rem; margin-bottom: 5px; color: #475569;">Feria Escolar Nacional de Ciencia y Tecnología</h2>
         <h1 style="font-size: 2.8rem; margin: 0; color: #005A7C; letter-spacing: 1px;">EUREKA 2026</h1>
-        <h2 style="font-size: 1.4rem; margin-top: 5px; color: #B4BD0E;">Categoría D</h2>
+        <h2 style="font-size: 1.4rem; margin-top: 5px; color: #B4BD0E;">Categoría E</h2>
     </div>
 
     <form id="multiStepForm">
@@ -55,84 +55,41 @@
         <!-- ================= ETAPA 1 ================= -->
         <fieldset class="step active" id="step1">
             
-            <!-- Texto solo visible en la primera hoja -->
             <div style="background-color: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #0369a1; text-align: justify; font-size: 14px; line-height: 1.5;">
-                Este formulario ha sido compartido con usted, docente asesor finalista de Eureka, para que verifique que los datos personales de cada uno de los integrantes sean correctos y para definir la forma de transporte desde su lugar de origen a la ciudad de Chiclayo, donde se realizará la final de Eureka 2026.
+                Este formulario ha sido compartido con usted, docente asesor finalista de Eureka, para que verifique que los datos personales de cada uno de los integrantes sean correctos y para definir la forma de transporte desde su lugar de origen a la ciudad de Chiclayo, donde se realizará la final nacional.
             </div>
 
             <legend>Sección 1: Autenticación</legend>
             
-            <label style="margin-top: 10px;" for="area">Área de participación</label>
-            <select id="area" required style="margin-top: 4px;">
-                <option value="" disabled selected>Seleccione área...</option>
-                <option value="Indagación científica">Indagación científica</option>
-                <option value="Soluciones tecnológicas">Soluciones tecnológicas</option>
-                <option value="Ciencias Sociales">Ciencias Sociales</option>
-            </select>
+            <!-- Se removieron Área, Región y Colegio -->
+            <label style="margin-top: 10px;" for="dniDocenteLogin">Número de documento del docente asesor</label>
+            <input type="text" id="dniDocenteLogin" placeholder="Ingrese su DNI o Carnet de extranjería" required style="margin-top: 4px;">
 
-            <label style="margin-top: 10px;" for="region">Región</label>
-            <select id="region" required style="margin-top: 4px;">
-                <option value="" disabled selected>Seleccione región...</option>
-                <option value="Amazonas">Amazonas</option>
-                <option value="Ancash">Ancash</option>
-                <option value="Apurímac">Apurímac</option>
-                <option value="Arequipa">Arequipa</option>
-                <option value="Ayacucho">Ayacucho</option>
-                <option value="Cajamarca">Cajamarca</option>
-                <option value="Callao">Callao</option>
-                <option value="Cusco">Cusco</option>
-                <option value="Huancavelica">Huancavelica</option>
-                <option value="Huánuco">Huánuco</option>
-                <option value="Ica">Ica</option>
-                <option value="Junín">Junín</option>
-                <option value="La Libertad">La Libertad</option>
-                <option value="Lambayeque">Lambayeque</option>
-                <option value="Lima Metropolitana">Lima Metropolitana</option>
-                <option value="Lima Provincias">Lima Provincias</option>
-                <option value="Loreto">Loreto</option>
-                <option value="Madre de Dios">Madre de Dios</option>
-                <option value="Moquegua">Moquegua</option>
-                <option value="Pasco">Pasco</option>
-                <option value="Piura">Piura</option>
-                <option value="Puno">Puno</option>
-                <option value="San Martín">San Martín</option>
-                <option value="Tacna">Tacna</option>
-                <option value="Tumbes">Tumbes</option>
-                <option value="Ucayali">Ucayali</option>
-            </select>
-
-            <label style="margin-top: 10px;" for="colegio">Institución Educativa</label>
-            <select id="colegio" required disabled style="margin-top: 4px;">
-                <option value="">Seleccione primero Área y Región</option>
-            </select>
-
-            <label style="margin-top: 10px;" for="dniDocenteLogin">DNI del Docente</label>
-            <input type="text" id="dniDocenteLogin" required style="margin-top: 4px;">
-
-            <label style="margin-top: 10px;" for="correoDocenteLogin">Correo del Docente</label>
-            <input type="email" id="correoDocenteLogin" required style="margin-top: 4px;">
+            <label style="margin-top: 10px;" for="correoDocenteLogin">Correo del docente asesor</label>
+            <input type="email" id="correoDocenteLogin" placeholder="Ingrese su correo registrado" required style="margin-top: 4px;">
 
             <button type="button" id="btnValidar" style="margin-top: 20px; width: 100%;">Validar y Continuar</button>
-            <div id="statusStep1" style="color:red; margin-top:10px; font-weight: bold; text-align: center;"></div>
+            <div id="statusStep1" style="color:rgb(250, 80, 37); margin-top:10px; font-weight: bold; text-align: center;"></div>
         </fieldset>
 
         <!-- ================= ETAPA 2 ================= -->
         <fieldset class="step" id="step2">
             <legend>Sección 2: Revisión de Datos</legend>
             
-            <p style="font-size: 14px; color: #333; margin-bottom: 5px; font-weight: 500;">
-                Por favor, revise que la información extraída de la base de datos sea correcta.
+            <p style="font-size: 14px; color: #333; margin-bottom: 15px; font-weight: 500;">
+                Por favor, revise que toda la información indicada en esta sección sea correcta.
             </p>
             
             <div style="background:#f0f4f8; padding:15px; margin-bottom:20px; border-radius:5px; font-size:14px;">
-                <strong>Área:</strong> <span id="lblArea"></span> <br>
-                <strong>Región:</strong> <span id="lblRegion"></span> <br>
-                <strong>Colegio:</strong> <span id="lblColegio"></span>
+                <strong>Área de participación:</strong> <span id="lblArea"></span> <br>
+                <strong>Región de procedencia:</strong> <span id="lblRegion"></span> <br>
+                <strong>Institución Educativa:</strong> <span id="lblColegio"></span>
             </div>
 
-            <div class="field-row">
-                <label>Nombre del Proyecto:</label>
-                <input type="text" id="nombreProyecto" readonly class="data-field">
+            <!-- Ajuste para proyecto: Textarea con alineación superior -->
+            <div class="field-row" style="align-items: flex-start;">
+                <label style="margin-top: 8px;">Nombre del Proyecto:</label>
+                <textarea id="nombreProyecto" readonly class="data-field" rows="1" style="resize: none; overflow: hidden; line-height: 1.4;"></textarea>
             </div>
 
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
@@ -183,11 +140,10 @@
             
             <div style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffeeba; padding: 15px; border-radius: 5px; margin-top: 25px; font-size: 13.5px; line-height: 1.5;">
                 <strong>Aviso importante:</strong> Si la información indicada es correcta, haga clic en "Continuar". 
-                Si la información es incorrecta, por favor comuníquese al correo <strong>ferias@concytec.gob.pe</strong> 
-                o al número <strong>993 782 974</strong> con el especialista Jorge Rojas.
+                Si la información es incorrecta, por favor comuníquese por whastapp al teléfono <strong>927 937 429</strong> 
+                con la asesora técnica Sharon Francia Ruiz.
             </div>
 
-            <!-- Botones iguales -->
             <div class="button-group">
                 <button type="button" id="btnRegresar1" class="btn-secondary">Regresar</button>
                 <button type="button" id="btnSiguienteEtapa2">Continuar</button>
@@ -198,7 +154,7 @@
         <fieldset class="step" id="step3">
             <legend>Sección 3: Logística y Transporte</legend>
             
-            <label style="margin-top: 10px;" for="ciudadOrigen">Lugar de origen (Centro Poblado/Distrito/Provincia/Región) </label>
+            <label style="margin-top: 10px;" for="ciudadOrigen">Ciudad de origen</label>
             <input type="text" id="ciudadOrigen" placeholder="Ej. Chachapoyas" required style="margin-top: 4px;">
 
             <div id="seccionAereo" class="hidden" style="background:#e0f2fe; padding:15px; border-radius:5px; margin-top:15px;">
@@ -212,7 +168,7 @@
 
             <div id="seccionTerrestre" class="hidden" style="background:#ecfccb; padding:15px; border-radius:5px; margin-top:15px;">
                 <h4 style="margin-top:0; color:#3f6212;">Transporte Terrestre</h4>
-                <label style="margin-top: 10px;" for="rutaTerrestre">Explícame cómo llegarías de tu lugar de origen a la ciudad de Chiclayo</label>
+                <label style="margin-top: 10px;" for="rutaTerrestre">Explícame cómo llegas de tu lugar de origen a Chiclayo</label>
                 <textarea id="rutaTerrestre" rows="4" placeholder="Detalle la ruta, empresas de transporte, etc."></textarea>
             </div>
 
@@ -230,12 +186,11 @@
                     </select>
                 </div>
                 <div>
-                    <label for="tiempoViaje">Tiempo de Viaje (horas)</label>
+                    <label for="tiempoViaje">Tiempo de Viaje (Hrs)</label>
                     <input type="number" id="tiempoViaje" placeholder="Ej. 12" required>
                 </div>
             </div>
 
-            <!-- Botones iguales -->
             <div class="button-group">
                 <button type="button" id="btnRegresar2" class="btn-secondary">Regresar</button>
                 <button type="button" id="btnFinalizar" style="background-color: #B4BD0E; color: #000;">Guardar y Enviar</button>
@@ -248,8 +203,8 @@
             <h2 style="color: green; font-size: 24px; margin-bottom: 10px;">¡Información Enviada Exitosamente!</h2>
             <p style="font-size: 16px; color: #444; line-height: 1.6; margin-bottom: 25px;">
                 Muchas gracias por brindar la información necesaria para coordinar su traslado. <br><br>
-                Cualquier consulta adicional puede escribirnos al correo <strong>ferias@concytec.gob.pe</strong> 
-                o comunicarse al número <strong>933 782 974</strong> con el especialista <strong>Jorge Rojas</strong>.
+                Cualquier consulta adicional puede comunicarse por whastapp al teléfono <strong>927 937 429</strong> 
+                con la asesora técnica Sharon Francia Ruiz.
             </p>
             <!-- <p style="font-size: 14px;">
                 Puede revisar toda la información y bases del concurso en nuestra plataforma oficial:<br>
