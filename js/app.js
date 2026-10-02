@@ -1,37 +1,11 @@
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzOi_8e18qwcIJzEHI7Gr6f9HlCSbqZZqyZKi2wz2zCj_wTWGTF1Aa6C246zHMyeRDiBw/exec"; 
 let globalData = {}; 
 
-// --- ETAPA 1: Cargar Colegios ---
-const cargarColegios = async () => {
-    const area = document.getElementById('area').value;
-    const region = document.getElementById('region').value;
-    if (area && region) {
-        document.getElementById('colegio').innerHTML = '<option>Cargando colegios...</option>';
-        const url = `${WEB_APP_URL}?action=getColegios&area=${encodeURIComponent(area)}&region=${encodeURIComponent(region)}`;
-        const res = await fetch(url);
-        const colegios = await res.json();
-        const selColegio = document.getElementById('colegio');
-        selColegio.innerHTML = '';
-        if(colegios.length === 0){
-            selColegio.innerHTML = '<option value="">No hay colegios en esta área/región</option>';
-        } else {
-            colegios.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; opt.text = c;
-                selColegio.appendChild(opt);
-            });
-            selColegio.disabled = false;
-        }
-    }
-};
-
-document.getElementById('area').addEventListener('change', cargarColegios);
-document.getElementById('region').addEventListener('change', cargarColegios);
-
 // --- ETAPA 1: Validar Login ---
 document.getElementById('btnValidar').addEventListener('click', async () => {
+    const btn = document.getElementById('btnValidar');
     const dni = document.getElementById('dniDocenteLogin').value;
-    const correo = document.getElementById('correoDocenteLogin').value;
+    const correo = document.getElementById('correoDocenteLogin').value.trim().toLowerCase();
     const status = document.getElementById('statusStep1');
     
     if(!dni || !correo) {
@@ -39,7 +13,11 @@ document.getElementById('btnValidar').addEventListener('click', async () => {
         return;
     }
 
-    status.innerText = "Validando credenciales en la base de datos...";
+    // Mejora UI: Deshabilitar botón y avisar de la demora normal
+    btn.disabled = true;
+    status.style.color = "var(--dark)";
+    status.innerText = "Buscando en la base de datos (esto puede tardar unos segundos)...";
+    
     const url = `${WEB_APP_URL}?action=validar&dni=${encodeURIComponent(dni)}&correo=${encodeURIComponent(correo)}`;
     
     try {
@@ -47,40 +25,51 @@ document.getElementById('btnValidar').addEventListener('click', async () => {
         const data = await res.json();
 
         if (data.error) {
+            status.style.color = "red";
             status.innerText = data.error;
+            btn.disabled = false; // Volver a habilitar si hay error
         } else {
             globalData = data; 
-            globalData.Area = document.getElementById('area').value;
-            globalData.Region = document.getElementById('region').value;
-            globalData.Colegio = document.getElementById('colegio').value;
-            
             prepararEtapa2();
+            
+            // 1. Mostrar la Etapa 2 primero
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step2').classList.add('active');
+            
+            // 2. Ajustar el tamaño del cuadro DESPUÉS de que sea visible en pantalla
+            setTimeout(() => {
+                const txtProyecto = document.getElementById('nombreProyecto');
+                txtProyecto.style.height = 'auto'; 
+                txtProyecto.style.height = (txtProyecto.scrollHeight) + 'px';
+            }, 50);
+
+            btn.disabled = false; 
         }
     } catch (e) {
+        status.style.color = "red";
         status.innerText = "Error de conexión. Asegúrate de tener conexión a internet.";
+        btn.disabled = false;
     }
 });
 
 
 // --- ETAPA 2: Lógica de visualización ---
 function prepararEtapa2() {
-    document.getElementById('lblArea').innerText = globalData.Area;
-    document.getElementById('lblRegion').innerText = globalData.Region;
-    document.getElementById('lblColegio').innerText = globalData.Colegio;
+    // Aplicamos .toUpperCase() para que siempre se vean en MAYÚSCULAS
+    document.getElementById('lblArea').innerText = (globalData.Area || "").toUpperCase();
+    document.getElementById('lblRegion').innerText = (globalData.Region || "").toUpperCase();
+    document.getElementById('lblColegio').innerText = (globalData.Colegio || "").toUpperCase();
     
-    document.getElementById('nombreProyecto').value = globalData.Proyecto || "";
+    // Asignamos el valor en mayúsculas, el tamaño se ajusta en el evento del botón
+    document.getElementById('nombreProyecto').value = (globalData.Proyecto || "").toUpperCase();
+    
+    // Los demás campos quedan igual
     document.getElementById('Nombre_E1').value = globalData.Nombre_E1 || "";
     document.getElementById('DNI_E1').value = globalData.DNI_E1 || "";
-    
-    // Búsqueda a prueba de errores para el Grado 1 (con espacio o guion)
     document.getElementById('Grado_E1').value = globalData.Grado_E1 || globalData["Grado E1"] || ""; 
     
     document.getElementById('Nombre_E2').value = globalData.Nombre_E2 || "";
     document.getElementById('DNI_E2').value = globalData.DNI_E2 || "";
-    
-    // Búsqueda a prueba de errores para el Grado 2 (con espacio o guion)
     document.getElementById('Grado_E2').value = globalData.Grado_E2 || globalData["Grado E2"] || "";
     
     document.getElementById('Nombre_Docente').value = globalData.Nombre_Docente || "";
@@ -101,7 +90,7 @@ function prepararEtapa2() {
 document.getElementById('btnRegresar1').addEventListener('click', () => {
     document.getElementById('step2').classList.remove('active');
     document.getElementById('step1').classList.add('active');
-    document.getElementById('statusStep1').innerText = ""; // Limpia el mensaje de "Validando..."
+    document.getElementById('statusStep1').innerText = ""; 
 });
 
 document.getElementById('btnSiguienteEtapa2').addEventListener('click', () => {
