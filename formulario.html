@@ -11,7 +11,7 @@
         .hidden { display: none !important; }
         
         /* Estilos generales de inputs */
-        .data-field, textarea, select, input[type="text"], input[type="number"], input[type="email"] { 
+        .data-field, textarea, select, input[type="text"], input[type="number"], input[type="email"], input[type="date"] { 
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -23,10 +23,10 @@
         .data-field[readonly] { background-color: #f9f9f9; border-color: #e2e8f0; color: #475569; }
         label { font-weight: bold; font-size: 13px; color: #333; display: block; }
         
-        /* Layout horizontal para optimizar espacio en Etapa 2 */
+        /* Layout horizontal para optimizar espacio */
         .field-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
         .field-row label { margin-top: 0; min-width: 145px; white-space: nowrap; }
-        .field-row input, .field-row textarea { flex: 1; min-width: 150px; margin-top: 0; padding: 6px 10px; }
+        .field-row input, .field-row select, .field-row textarea { flex: 1; min-width: 150px; margin-top: 0; padding: 6px 10px; }
         
         /* Layout de 3 columnas en Etapa 3 */
         .flex-row-3 { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
@@ -61,12 +61,8 @@
 
             <legend>Sección 1: Autenticación</legend>
             
-            <!-- Se removieron Área, Región y Colegio -->
-            <label style="margin-top: 10px;" for="dniDocenteLogin">Número de documento del docente asesor</label>
+            <label style="margin-top: 10px;" for="dniDocenteLogin">Número de documento del docente asesor (DNI o Carnet de Extranjería)</label>
             <input type="text" id="dniDocenteLogin" placeholder="Ingrese su DNI o Carnet de extranjería" required style="margin-top: 4px;">
-
-            <label style="margin-top: 10px;" for="correoDocenteLogin">Correo del docente asesor</label>
-            <input type="email" id="correoDocenteLogin" placeholder="Ingrese su correo registrado" required style="margin-top: 4px;">
 
             <button type="button" id="btnValidar" style="margin-top: 20px; width: 100%;">Validar y Continuar</button>
             <div id="statusStep1" style="color:rgb(250, 80, 37); margin-top:10px; font-weight: bold; text-align: center;"></div>
@@ -77,23 +73,21 @@
             <legend>Sección 2: Revisión de Datos</legend>
             
             <p style="font-size: 14px; color: #333; margin-bottom: 15px; font-weight: 500;">
-                Por favor, revise que toda la información indicada en esta sección sea correcta.
+                Por favor, revise que toda la información indicada en esta sección sea correcta y complete los datos solicitados.
             </p>
             
-            <div style="background:#f0f4f8; padding:15px; margin-bottom:20px; border-radius:5px; font-size:14px;">
+            <div style="background:#f0f4f8; padding:15px; margin-bottom:20px; border-radius:5px; font-size:14px; line-height: 1.8;">
                 <strong>Área de participación:</strong> <span id="lblArea"></span> <br>
-                <strong>Región de procedencia:</strong> <span id="lblRegion"></span> <br>
-                <strong>Institución Educativa:</strong> <span id="lblColegio"></span>
-            </div>
-
-            <!-- Ajuste para proyecto: Textarea con alineación superior -->
-            <div class="field-row" style="align-items: flex-start;">
-                <label style="margin-top: 8px;">Nombre del Proyecto:</label>
-                <textarea id="nombreProyecto" readonly class="data-field" rows="1" style="resize: none; overflow: hidden; line-height: 1.4;"></textarea>
+                <strong>Región:</strong> <span id="lblRegion"></span> <br>
+                <strong>UGEL:</strong> <span id="lblUgel"></span> <br>
+                <strong>Distrito:</strong> <span id="lblDistrito"></span> <br>
+                <strong>Institución Educativa:</strong> <span id="lblColegio"></span> <br>
+                <strong>Nombre del Proyecto:</strong> <span id="lblProyecto"></span>
             </div>
 
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
 
+            <!-- Estudiante 1 -->
             <h4 style="margin: 0 0 10px 0; color:#005A7C; font-size: 16px;">Estudiante 1</h4>
             <div class="field-row">
                 <label>Nombres y Apellidos:</label>
@@ -102,12 +96,17 @@
             <div class="field-row">
                 <label>DNI:</label>
                 <input type="text" id="DNI_E1" readonly class="data-field">
-                <label style="min-width: 50px;">Grado:</label>
-                <input type="text" id="Grado_E1" readonly class="data-field">
+            </div>
+            <div class="field-row">
+                <label>Fecha de Nacimiento:</label>
+                <input type="text" id="Fecha_Nacimiento_E1" readonly class="data-field">
+                <label style="min-width: 50px; margin-left: 10px;">Sexo:</label>
+                <input type="text" id="Sexo_E1" readonly class="data-field">
             </div>
 
             <hr style="margin: 20px 0; border: 0; border-top: 1px dashed #ccc;">
 
+            <!-- Estudiante 2 -->
             <h4 style="margin: 0 0 10px 0; color:#005A7C; font-size: 16px;">Estudiante 2</h4>
             <div class="field-row">
                 <label>Nombres y Apellidos:</label>
@@ -116,37 +115,65 @@
             <div class="field-row">
                 <label>DNI:</label>
                 <input type="text" id="DNI_E2" readonly class="data-field">
-                <label style="min-width: 50px;">Grado:</label>
-                <input type="text" id="Grado_E2" readonly class="data-field">
+            </div>
+            <div class="field-row">
+                <label>Fecha de Nacimiento:</label>
+                <input type="text" id="Fecha_Nacimiento_E2" readonly class="data-field">
+                <label style="min-width: 50px; margin-left: 10px;">Sexo:</label>
+                <input type="text" id="Sexo_E2" readonly class="data-field">
             </div>
 
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
 
+            <!-- Docente Asesor -->
             <h4 style="margin: 0 0 10px 0; color:#005A7C; font-size: 16px;">Docente Asesor</h4>
             <div class="field-row">
                 <label>Nombres y Apellidos:</label>
                 <input type="text" id="Nombre_Docente" readonly class="data-field">
             </div>
             <div class="field-row">
-                <label id="lblDocumentoDocente">DNI:</label>
-                <input type="text" id="Doc_Docente_View" readonly class="data-field">
-                <label style="min-width: 70px;">Teléfono:</label>
+                <label id="lblTipoDocumentoDocente">Tipo de Documento:</label>
+                <input type="text" id="Tipo_Documento_Docente" readonly class="data-field">
+                <label style="min-width: 70px; margin-left: 10px;">Número:</label>
+                <input type="text" id="Numero_Documento_Docente" readonly class="data-field">
+            </div>
+            <div class="field-row">
+                <label>Teléfono:</label>
                 <input type="text" id="Telefono_Docente" readonly class="data-field">
             </div>
             <div class="field-row">
                 <label>Correo Electrónico:</label>
                 <input type="email" id="Correo_Docente" readonly class="data-field">
             </div>
+
+            <!-- Campos obligatorios a completar por el Docente -->
+            <div style="background: #fdf6e3; padding: 12px; border-radius: 6px; margin-top: 15px; border: 1px solid #fae6b1;">
+                <p style="font-size: 13px; color: #8a6d3b; margin: 0 0 10px 0; font-weight: bold;">
+                    Complete la información requerida del docente asesor:
+                </p>
+                <div class="field-row">
+                    <label style="color: #005A7C;">Fecha de Nacimiento (*):</label>
+                    <input type="date" id="Fecha_Nacimiento_Docente" required style="background: white;">
+                </div>
+                <div class="field-row">
+                    <label style="color: #005A7C;">Sexo (*):</label>
+                    <select id="Sexo_Docente" required style="background: white;">
+                        <option value="" disabled selected>Elegir...</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+            </div>
             
             <div style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffeeba; padding: 15px; border-radius: 5px; margin-top: 25px; font-size: 13.5px; line-height: 1.5;">
-                <strong>Aviso importante:</strong> Si la información indicada es correcta, haga clic en "Continuar". 
-                Si la información es incorrecta, por favor comuníquese por whastapp al teléfono <strong>927 937 429</strong> 
+                <strong>Aviso importante:</strong> Si la información indicada es correcta, complete los datos solicitados y haga clic en "Guardar y Continuar". 
+                Si la información es incorrecta, por favor comuníquese por whatsapp al teléfono <strong>927 937 429</strong> 
                 con la asesora técnica Sharon Francia Ruiz.
             </div>
 
             <div class="button-group">
                 <button type="button" id="btnRegresar1" class="btn-secondary">Regresar</button>
-                <button type="button" id="btnSiguienteEtapa2">Continuar</button>
+                <button type="button" id="btnSiguienteEtapa2" disabled>Guardar y Continuar</button>
             </div>
         </fieldset>
 
@@ -154,31 +181,31 @@
         <fieldset class="step" id="step3">
             <legend>Sección 3: Logística y Transporte</legend>
             
-            <label style="margin-top: 10px;" for="ciudadOrigen">Ciudad de origen</label>
+            <label style="margin-top: 10px;" for="ciudadOrigen">Ciudad de origen (*)</label>
             <input type="text" id="ciudadOrigen" placeholder="Ej. Chachapoyas" required style="margin-top: 4px;">
 
             <div id="seccionAereo" class="hidden" style="background:#e0f2fe; padding:15px; border-radius:5px; margin-top:15px;">
                 <h4 style="margin-top:0; color:#0369a1;">Transporte Aéreo</h4>
-                <label style="margin-top: 10px;" for="aeropuerto">Aeropuerto de Embarque</label>
+                <label style="margin-top: 10px;" for="aeropuerto">Aeropuerto de Embarque (*)</label>
                 <input type="text" id="aeropuerto" placeholder="Ej. Aeropuerto de Jaén" style="margin-top: 4px;">
                 
-                <label style="margin-top: 10px;" for="rutaAereo">Explícame cómo llegas de tu lugar de origen al aeropuerto</label>
+                <label style="margin-top: 10px;" for="rutaAereo">Explícame cómo llegas de tu lugar de origen al aeropuerto (*)</label>
                 <textarea id="rutaAereo" rows="4" placeholder="Detalle la ruta, buses que toma, etc."></textarea>
             </div>
 
             <div id="seccionTerrestre" class="hidden" style="background:#ecfccb; padding:15px; border-radius:5px; margin-top:15px;">
                 <h4 style="margin-top:0; color:#3f6212;">Transporte Terrestre</h4>
-                <label style="margin-top: 10px;" for="rutaTerrestre">Explícame cómo llegas de tu lugar de origen a Chiclayo</label>
+                <label style="margin-top: 10px;" for="rutaTerrestre">Explícame cómo llegas de tu lugar de origen a Chiclayo (*)</label>
                 <textarea id="rutaTerrestre" rows="4" placeholder="Detalle la ruta, empresas de transporte, etc."></textarea>
             </div>
 
             <div class="flex-row-3">
                 <div>
-                    <label for="costo">Costo del traslado (S/)</label>
+                    <label for="costo">Costo del traslado (S/) (*)</label>
                     <input type="number" id="costo" placeholder="0.00" step="0.10" required>
                 </div>
                 <div>
-                    <label for="poseeFactura">¿Poseen Factura?</label>
+                    <label for="poseeFactura">¿Poseen Factura? (*)</label>
                     <select id="poseeFactura" required>
                         <option value="" disabled selected>Elegir...</option>
                         <option value="SI">Sí</option>
@@ -186,14 +213,14 @@
                     </select>
                 </div>
                 <div>
-                    <label for="tiempoViaje">Tiempo de Viaje (Hrs)</label>
+                    <label for="tiempoViaje">Tiempo de Viaje (Hrs) (*)</label>
                     <input type="number" id="tiempoViaje" placeholder="Ej. 12" required>
                 </div>
             </div>
 
             <div class="button-group">
                 <button type="button" id="btnRegresar2" class="btn-secondary">Regresar</button>
-                <button type="button" id="btnFinalizar" style="background-color: #B4BD0E; color: #000;">Guardar y Enviar</button>
+                <button type="button" id="btnFinalizar" disabled style="background-color: #B4BD0E; color: #000;">Guardar y Enviar</button>
             </div>
             <div id="statusFinal" style="margin-top:10px; font-weight:bold; text-align:center;"></div>
         </fieldset>
@@ -203,13 +230,9 @@
             <h2 style="color: green; font-size: 24px; margin-bottom: 10px;">¡Información Enviada Exitosamente!</h2>
             <p style="font-size: 16px; color: #444; line-height: 1.6; margin-bottom: 25px;">
                 Muchas gracias por brindar la información necesaria para coordinar su traslado. <br><br>
-                Cualquier consulta adicional puede comunicarse por whastapp al teléfono <strong>927 937 429</strong> 
+                Cualquier consulta adicional puede comunicarse por whatsapp al teléfono <strong>927 937 429</strong> 
                 con la asesora técnica Sharon Francia Ruiz.
             </p>
-            <!-- <p style="font-size: 14px;">
-                Puede revisar toda la información y bases del concurso en nuestra plataforma oficial:<br>
-                <a href="http://feriaeureka.com.pe" target="_blank" style="color: #005A7C; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">http://feriaeureka.com.pe</a>
-            </p> -->
         </fieldset>
 
     </form>
