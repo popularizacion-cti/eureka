@@ -1,24 +1,22 @@
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzOi_8e18qwcIJzEHI7Gr6f9HlCSbqZZqyZKi2wz2zCj_wTWGTF1Aa6C246zHMyeRDiBw/exec"; 
 let globalData = {}; 
 
-// --- ETAPA 1: Validar Login ---
+// --- ETAPA 1: Validar Login por DNI / Carnet de Extranjería ---
 document.getElementById('btnValidar').addEventListener('click', async () => {
     const btn = document.getElementById('btnValidar');
-    const dni = document.getElementById('dniDocenteLogin').value;
-    const correo = document.getElementById('correoDocenteLogin').value.trim().toLowerCase();
+    const dni = document.getElementById('dniDocenteLogin').value.trim();
     const status = document.getElementById('statusStep1');
     
-    if(!dni || !correo) {
-        status.innerText = "Complete DNI y Correo.";
+    if (!dni) {
+        status.innerText = "Ingrese su número de documento.";
         return;
     }
 
-    // Mejora UI: Deshabilitar botón y avisar de la demora normal
     btn.disabled = true;
     status.style.color = "var(--dark)";
     status.innerText = "Buscando en la base de datos (esto puede tardar unos segundos)...";
     
-    const url = `${WEB_APP_URL}?action=validar&dni=${encodeURIComponent(dni)}&correo=${encodeURIComponent(correo)}`;
+    const url = `${WEB_APP_URL}?action=validar&dni=${encodeURIComponent(dni)}`;
     
     try {
         const res = await fetch(url);
@@ -27,62 +25,76 @@ document.getElementById('btnValidar').addEventListener('click', async () => {
         if (data.error) {
             status.style.color = "red";
             status.innerText = data.error;
-            btn.disabled = false; // Volver a habilitar si hay error
+            btn.disabled = false;
         } else {
             globalData = data; 
             prepararEtapa2();
             
-            // 1. Mostrar la Etapa 2 primero
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step2').classList.add('active');
-            
-            // 2. Ajustar el tamaño del cuadro DESPUÉS de que sea visible en pantalla
-            setTimeout(() => {
-                const txtProyecto = document.getElementById('nombreProyecto');
-                txtProyecto.style.height = 'auto'; 
-                txtProyecto.style.height = (txtProyecto.scrollHeight) + 'px';
-            }, 50);
 
             btn.disabled = false; 
         }
     } catch (e) {
         status.style.color = "red";
-        status.innerText = "Error de conexión. Asegúrate de tener conexión a internet.";
+        status.innerText = "Error de conexión. Asegúrese de tener conexión a internet.";
         btn.disabled = false;
     }
 });
 
 
-// --- ETAPA 2: Lógica de visualización ---
+// --- ETAPA 2: Lógica de visualización y validación ---
 function prepararEtapa2() {
-    // Aplicamos .toUpperCase() para que siempre se vean en MAYÚSCULAS
+    // Primera parte: Información del Proyecto e Institución
     document.getElementById('lblArea').innerText = (globalData.Area || "").toUpperCase();
     document.getElementById('lblRegion').innerText = (globalData.Region || "").toUpperCase();
+    document.getElementById('lblUgel').innerText = (globalData.UGEL || "").toUpperCase();
+    document.getElementById('lblDistrito').innerText = (globalData.Distrito || "").toUpperCase();
     document.getElementById('lblColegio').innerText = (globalData.Colegio || "").toUpperCase();
+    document.getElementById('lblProyecto').innerText = (globalData.Proyecto || "").toUpperCase();
     
-    // Asignamos el valor en mayúsculas, el tamaño se ajusta en el evento del botón
-    document.getElementById('nombreProyecto').value = (globalData.Proyecto || "").toUpperCase();
-    
-    // Los demás campos quedan igual
+    // Estudiante 1
     document.getElementById('Nombre_E1').value = globalData.Nombre_E1 || "";
     document.getElementById('DNI_E1').value = globalData.DNI_E1 || "";
-    document.getElementById('Grado_E1').value = globalData.Grado_E1 || globalData["Grado E1"] || ""; 
-    
+    document.getElementById('Fecha_Nacimiento_E1').value = formatearFecha(globalData.Fecha_Nacimiento_E1);
+    document.getElementById('Sexo_E1').value = globalData.Sexo_E1 || "";
+
+    // Estudiante 2
     document.getElementById('Nombre_E2').value = globalData.Nombre_E2 || "";
     document.getElementById('DNI_E2').value = globalData.DNI_E2 || "";
-    document.getElementById('Grado_E2').value = globalData.Grado_E2 || globalData["Grado E2"] || "";
-    
+    document.getElementById('Fecha_Nacimiento_E2').value = formatearFecha(globalData.Fecha_Nacimiento_E2);
+    document.getElementById('Sexo_E2').value = globalData.Sexo_E2 || "";
+
+    // Docente Asesor
     document.getElementById('Nombre_Docente').value = globalData.Nombre_Docente || "";
+    document.getElementById('Tipo_Documento_Docente').value = globalData.Tipo_Documento_Docente || "";
+    document.getElementById('Numero_Documento_Docente').value = globalData.Numero_Documento_Docente || globalData.DNI_Docente || "";
     document.getElementById('Telefono_Docente').value = globalData.Telefono_Docente || "";
     document.getElementById('Correo_Docente').value = globalData.Correo_Docente || ""; 
 
-    const docDocente = globalData.DNI_Docente || "";
-    document.getElementById('Doc_Docente_View').value = docDocente;
-    
-    if (docDocente.toString().trim().length === 8) {
-        document.getElementById('lblDocumentoDocente').innerText = "DNI:";
+    // Cargar o restaurar campos a completar del Docente
+    document.getElementById('Fecha_Nacimiento_Docente').value = globalData.Fecha_Nacimiento_Docente || "";
+    document.getElementById('Sexo_Docente').value = globalData.Sexo_Docente || "";
+
+    validarCamposDocenteEtapa2();
+}
+
+// Escuchar cambios en los campos obligatorios del docente
+const inputFechaNac = document.getElementById('Fecha_Nacimiento_Docente');
+const selectSexoDoc = document.getElementById('Sexo_Docente');
+
+inputFechaNac.addEventListener('change', validarCamposDocenteEtapa2);
+selectSexoDoc.addEventListener('change', validarCamposDocenteEtapa2);
+
+function validarCamposDocenteEtapa2() {
+    const fecha = inputFechaNac.value;
+    const sexo = selectSexoDoc.value;
+    const btnContinuar = document.getElementById('btnSiguienteEtapa2');
+
+    if (fecha !== "" && sexo !== "") {
+        btnContinuar.disabled = false;
     } else {
-        document.getElementById('lblDocumentoDocente').innerText = "Carnet de Extranjería:";
+        btnContinuar.disabled = true;
     }
 }
 
@@ -94,6 +106,10 @@ document.getElementById('btnRegresar1').addEventListener('click', () => {
 });
 
 document.getElementById('btnSiguienteEtapa2').addEventListener('click', () => {
+    // Guardar los datos ingresados del docente formateando la fecha a DD/MM/AAAA
+    globalData.Fecha_Nacimiento_Docente = formatearFechaGuardado(inputFechaNac.value);
+    globalData.Sexo_Docente = selectSexoDoc.value;
+
     document.getElementById('step2').classList.remove('active');
     document.getElementById('step3').classList.add('active');
     prepararEtapa3();
@@ -105,7 +121,7 @@ document.getElementById('btnRegresar2').addEventListener('click', () => {
 });
 
 
-// --- ETAPA 3: Lógica y Envío ---
+// --- ETAPA 3: Lógica, Validación y Envío ---
 function prepararEtapa3() {
     if (globalData.Transporte === "AEREO") {
         document.getElementById('seccionAereo').classList.remove('hidden');
@@ -115,7 +131,7 @@ function prepararEtapa3() {
         document.getElementById('seccionAereo').classList.add('hidden');
     }
 
-    if(globalData.isEdited) {
+    if (globalData.isEdited) {
         document.getElementById('ciudadOrigen').value = globalData.Ciudad_Origen || "";
         document.getElementById('costo').value = globalData.Costo || "";
         document.getElementById('poseeFactura').value = globalData.Factura || "";
@@ -128,6 +144,44 @@ function prepararEtapa3() {
             document.getElementById('rutaTerrestre').value = globalData.Ruta || "";
         }
     }
+
+    // Comprobar la validación al cargar la vista
+    validarCamposEtapa3();
+}
+
+// Elementos de la Etapa 3 para escuchar eventos
+const camposEtapa3 = [
+    'ciudadOrigen', 'costo', 'poseeFactura', 'tiempoViaje',
+    'aeropuerto', 'rutaAereo', 'rutaTerrestre'
+];
+
+camposEtapa3.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('input', validarCamposEtapa3);
+        el.addEventListener('change', validarCamposEtapa3);
+    }
+});
+
+function validarCamposEtapa3() {
+    const ciudad = document.getElementById('ciudadOrigen').value.trim();
+    const costo = document.getElementById('costo').value.trim();
+    const factura = document.getElementById('poseeFactura').value;
+    const tiempo = document.getElementById('tiempoViaje').value.trim();
+
+    let transporteValido = false;
+
+    if (globalData.Transporte === "AEREO") {
+        const aeropuerto = document.getElementById('aeropuerto').value.trim();
+        const rutaAereo = document.getElementById('rutaAereo').value.trim();
+        transporteValido = (aeropuerto !== "" && rutaAereo !== "");
+    } else {
+        const rutaTerrestre = document.getElementById('rutaTerrestre').value.trim();
+        transporteValido = (rutaTerrestre !== "");
+    }
+
+    const todosLlenos = ciudad !== "" && costo !== "" && factura !== "" && tiempo !== "" && transporteValido;
+    document.getElementById('btnFinalizar').disabled = !todosLlenos;
 }
 
 document.getElementById('btnFinalizar').addEventListener('click', async () => {
@@ -138,16 +192,17 @@ document.getElementById('btnFinalizar').addEventListener('click', async () => {
     status.style.color = "var(--dark)";
     status.innerText = "Enviando información, por favor espere...";
     
-    globalData.Ciudad_Origen = document.getElementById('ciudadOrigen').value;
-    globalData.Costo = document.getElementById('costo').value;
+    globalData.Ciudad_Origen = document.getElementById('ciudadOrigen').value.trim();
+    globalData.Costo = document.getElementById('costo').value.trim();
     globalData.Factura = document.getElementById('poseeFactura').value;
-    globalData.Tiempo_Viaje = document.getElementById('tiempoViaje').value;
+    globalData.Tiempo_Viaje = document.getElementById('tiempoViaje').value.trim();
 
     if (globalData.Transporte === "AEREO") {
-        globalData.Aeropuerto = document.getElementById('aeropuerto').value;
-        globalData.Ruta = document.getElementById('rutaAereo').value;
+        globalData.Aeropuerto = document.getElementById('aeropuerto').value.trim();
+        globalData.Ruta = document.getElementById('rutaAereo').value.trim();
     } else {
-        globalData.Ruta = document.getElementById('rutaTerrestre').value;
+        globalData.Aeropuerto = "";
+        globalData.Ruta = document.getElementById('rutaTerrestre').value.trim();
     }
 
     try {
@@ -166,3 +221,46 @@ document.getElementById('btnFinalizar').addEventListener('click', async () => {
         btn.disabled = false;
     }
 });
+
+function formatearFecha(fechaStr) {
+    if (!fechaStr) return "";
+    
+    // Convertir a string por si viene como otro tipo
+    const str = String(fechaStr).trim();
+    
+    // Si contiene la 'T' de ISO (ej: 2011-08-25T05:00:00.000Z)
+    if (str.includes('T')) {
+        const partesFecha = str.split('T')[0].split('-'); // ["2011", "08", "25"]
+        if (partesFecha.length === 3) {
+            const anio = partesFecha[0];
+            const mes = partesFecha[1];
+            const dia = partesFecha[2];
+            return `${dia}-${mes}-${anio}`;
+        }
+    }
+    
+    // Si viene en formato AAAA-MM-DD
+    if (str.includes('-')) {
+        const partes = str.split('-');
+        if (partes.length === 3 && partes[0].length === 4) {
+            return `${partes[2]}-${partes[1]}-${partes[0]}`;
+        }
+    }
+    
+    return str;
+}
+
+function formatearFechaGuardado(fechaInput) {
+    if (!fechaInput) return "";
+    
+    // Si la fecha viene del input type="date" tiene formato AAAA-MM-DD
+    const partes = fechaInput.split('-');
+    if (partes.length === 3) {
+        const anio = partes[0];
+        const mes = partes[1];
+        const dia = partes[2];
+        return `${dia}/${mes}/${anio}`; // Puedes usar '/' o '-' según tu preferencia
+    }
+    
+    return fechaInput;
+}
