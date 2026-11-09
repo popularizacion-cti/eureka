@@ -1,31 +1,180 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página 1</title>
+    <title>Resultados Categoría D | EUREKA 2026</title>
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de colores para mantener la paleta de tu sitio original -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#B4BD0E',   // Verde
+                        dark: '#005A7C',    // Azul
+                        accent: '#00B3CD',  // Celeste
+                    }
+                }
+            }
+        }
+
+    </script>
+
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/pagina1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-<body>
 
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="pagina1.html">Página 1</a>
-        <a href="pagina2.html">Página 2</a>
-        <a href="pagina3.html">Página 3</a>
-        <a href="pagina4.html">Página 4</a>
-        <a href="pagina5.html">Página 5</a>
-    </nav>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col">
 
-    <main id="contenido-pagina1">
-        <h1>Esta es la Página 1</h1>
-        <p>Como puedes ver, el diseño aquí es diferente gracias a su CSS independiente.</p>
-        <div class="caja-especial">Soy una caja única de la página 1</div>
+    <!-- Header / Nav -->
+    <header class="bg-slate-900 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold animate__animated animate__fadeInLeft">EUREKA <span class="text-brand">2026</span></h1>
+            </div>
+            <a href="index.html" class="text-sm font-bold border-2 border-white px-4 py-2 rounded hover:bg-white hover:text-slate-900 transition">
+                ← Volver al Inicio
+            </a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+        
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-black text-dark mb-2">Resultados Nacionales</h2>
+            <h3 class="text-2xl font-bold text-brand uppercase tracking-widest">Categoría E</h3>
+            <p class="text-slate-500 mt-2">3°, 4° y 5° de Educación Secundaria</p>
+        </div>
+
+        <!-- Controles: Selector de Área -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-brand mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <label for="areaSelect" class="font-bold text-slate-700 text-lg">Selecciona el Área de Participación:</label>
+            <select id="areaSelect" class="bg-slate-50 border border-slate-300 text-slate-900 text-base rounded-lg focus:ring-brand focus:border-brand block w-full md:w-1/2 p-3 font-medium outline-none transition shadow-sm">
+                <option value="Sociales" selected>Ciencias Sociales</option>
+                <option value="Cientifica">Indagación Científica</option>
+                <option value="Tecnologica">Solución Tecnológica</option>
+            </select>
+        </div>
+
+        <!-- Tabla de Resultados -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="bg-dark border-b border-slate-200">
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider w-1/4">Región</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider w-2/5">Colegio</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider text-center">Puntaje</th>
+                            <th class="py-4 px-6 text-slate-100 font-bold uppercase text-sm tracking-wider text-center">Puesto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaResultados" class="divide-y divide-slate-100">
+                        <!-- El contenido se cargará dinámicamente aquí -->
+                        <tr>
+                            <td colspan="4" class="py-8 text-center text-slate-500 font-medium animate-pulse">
+                                Cargando resultados...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </main>
 
-    <script src="js/global.js"></script>
-    <script src="js/pagina1.js"></script>
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-10 pb-8 mt-auto">
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12 pb-4">
+            <div>
+                <h3 class="text-brand font-bold text-xl mb-4">Eureka</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Feria Escolar Nacional de Ciencia y Tecnología que busca promover el desarrollo de competencias científicas.
+                </p>
+            </div>
+            <div></div>
+            <div>
+                <h4 class="font-bold mb-4 uppercase text-accent tracking-widest text-sm">Contacto</h4>
+                <p class="text-slate-400 text-sm">📍 Av. del Aire 485, San Borja, Lima</p>
+                <p class="text-slate-400 text-sm">📧 ferias@concytec.gob.pe</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica para obtener datos de Google Sheets -->
+    <script>
+        // ¡IMPORTANTE! Reemplaza este ID con el ID real de tu Google Sheet
+        // El ID está en la URL de tu documento: docs.google.com/spreadsheets/d/AQUI_ESTA_EL_ID/edit
+        const SHEET_ID = '1ElumPrcdCCtmIJc6V5A0UIU8SZAXhXjv3lSw5CDfMnE'; 
+
+        const selectArea = document.getElementById('areaSelect');
+        const tablaBody = document.getElementById('tablaResultados');
+
+        // Función para obtener y mostrar datos
+        async function cargarDatos(nombreHoja) {
+            tablaBody.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-slate-500 font-medium animate-pulse">Cargando resultados...</td></tr>';
+            
+            // Endpoint público de Google Sheets (devuelve JSON mediante gviz)
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${nombreHoja}`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                // Google devuelve un JSON rodeado por una función de callback, debemos limpiarlo
+                const jsonData = JSON.parse(text.substring(47, text.length - 2));
+                const filas = jsonData.table.rows;
+
+                tablaBody.innerHTML = ''; // Limpiar estado de carga
+
+                if (!filas || filas.length === 0) {
+                    tablaBody.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-slate-500">No hay resultados publicados aún para esta área.</td></tr>';
+                    return;
+                }
+
+                // Renderizar las filas (Saltamos la fila 0 si asume que es el encabezado, pero la API gviz a veces la separa en cols)
+                filas.forEach((fila) => {
+                    // Validar que la fila tenga datos
+                    if(fila.c && fila.c[0] && fila.c[1] && fila.c[2] && fila.c[3]) {
+                        
+                        const region = fila.c[0].v;
+                        const colegio = fila.c[1].v;
+                        const puntaje = parseFloat(fila.c[2].v).toFixed(2);
+                        const puesto = fila.c[3].v;
+
+                        // Estilo especial para el primer puesto
+                        const isPrimero = puesto == 1 || puesto === "1";
+                        const trClass = isPrimero ? "bg-brand/10 font-bold hover:bg-brand/20" : "hover:bg-slate-50/70";
+                        const puestoBadge = isPrimero ? `<span class="bg-brand text-white py-1 px-3 rounded-full text-xs shadow">1º PUESTO 🏆</span>` : `<span class="text-slate-600">${puesto}</span>`;
+
+                        const tr = document.createElement('tr');
+                        tr.className = `transition-colors ${trClass}`;
+                        tr.innerHTML = `
+                            <td class="py-4 px-6 text-slate-700">${region}</td>
+                            <td class="py-4 px-6 text-slate-700">${colegio}</td>
+                            <td class="py-4 px-6 text-slate-700 text-center text-lg font-mono">${puntaje}</td>
+                            <td class="py-4 px-6 text-center font-bold">${puestoBadge}</td>
+                        `;
+                        tablaBody.appendChild(tr);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+                tablaBody.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-red-500 font-bold">Error al cargar los resultados. Verifica el ID del documento y la conexión.</td></tr>';
+            }
+        }
+
+        // Cargar datos por defecto (la primera opción)
+        cargarDatos(selectArea.value);
+
+        // Event listener para cuando cambian la selección
+        selectArea.addEventListener('change', (e) => {
+            cargarDatos(e.target.value);
+        });
+    </script>
 </body>
 </html>
